@@ -1,0 +1,120 @@
+$$name
+    tons of random shit
+    as long as you have correct indentation
+    nothing bad happens
+
+$$foo
+    $$bar
+        yes, fucking stacked macro is allowed
+    $$baz
+        and you can have two, the result are concatenated
+
+$$big $$small
+    yes, if you have just chain of macros, you can just put
+    them in one line, and they will be executed in order,
+    kind of sugar. this require all the macro except the last one
+    to only take one argument
+
+$$comment
+    yes, this is a function that do nothing
+
+$$something_cool
+    $$monad 123
+    $$comment yes now we can write this in one line, if they have only one argument
+        after some thinking, i think this is carefully united with the
+        chaining macro design.
+
+$$some_in_consideration
+    $$not_only_a_monad 123
+        it could have more!
+    $$command yes, this is somewhat need to be considered carefully
+        like every command, even if it's not monadic, it could put it's first
+        argument in the same line
+    $$first $$second $$third first param for third macro
+        second param for third macro
+        third param for third macro
+    $$command the previous one example could be rewritten as
+        $$foo 
+            $$bar yes, fucking stacked macro is allowed
+            $$baz and you can have two, the result are concatenated
+        well, this seemed kinda esoteric
+    
+$$if 1
+    $$then $$display
+        this branch is called
+    $$else $$display
+        this branch is not called
+    $$then
+        even more
+    $$then
+        even more
+
+$$non-starting-macro-as-literals
+    you could just have $$123 as a literal, if it's not starting the line
+    and in this case, it's not a macro, it's just a literal
+
+$$wow 
+    
+$$exec $$display $a $b 1
+    $$where
+        $a = 1
+        $b = 0
+
+grammar for $$define
+
+$$define
+    $name $arg1 $arg2 ...
+    $replacement_text
+    $replacement_text2
+    ...
+
+$$comment
+    let's consider how the $func is called.
+    consider the function $frac $a $b
+
+$$comment
+    $frac $frac 1 2 3
+    this will be parsed as $frac ($frac 1 2) 3
+    but what is we want that one part have space in it?
+    $frac $frac (1 2) 3 4 
+    the thing with ( ) is not a good idea, because we want
+    ( ) be literal rather have special meaning
+    we need someway to distinguish between parameters,
+    but make it elegant
+    $frac $frac 1 2; 3; 4; // no
+    $frac $frac (1 2) 3 4 // maybe ?
+    $frac $frac $(1 2) $sub 3 4 // $() is a special function
+    $frac $frac `1 2` 3 4 // `` is a special function
+    maybe expand the usage of define
+
+$$comment
+    $$define new usage
+    $$regex
+        $frac <regex pattern>
+        $body
+    use $1, $2, $name to refer the matched part
+    more advanced usage,
+    notice that each $func will create a "block" effect
+    which means that the function like this
+    $frac $a $b
+        $a / $b
+    the $a here is not a token literal, say
+    $frac $frac 1 2 3
+    the $a here is the result of $frac 1 2
+    and $b is 3, this the blocking effect of $func,
+    yet, when we use <regex pattern>, the $func have the ability
+    to eat all the tokens until the end of the line, say
+    $$regex
+        $vec /<(.*)>/g
+        $1
+    this is the inner of the something like <1>, it will give 1,
+    it will ignore the blocking effect of $func, which means
+    $vec <1 $func> will give the inner 1 $func, it's generally advised
+    not to break the block effect the $func, but it's allowed.
+    so the function now looks like
+    $$match
+        $func $1 $2 $a $b $<regex pattern> $another_one
+        $body
+
+
+

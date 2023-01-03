@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "iostream": "cpp",
+        "format": "cpp",
+        "expected": "cpp"
+    },
+    "cSpell.words": [
+        "nmsland"
+    ]
+}

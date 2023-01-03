@@ -1,0 +1,25 @@
+$$comment
+    Discussion about the grouping of the space-separated literals.
+    I prefer use `` to group all the literals, and this is the only way.
+    $(...) requires $$define to support regex matching, which add increase
+    complexity, and the regex will penetrate the blocking effect of $. Also
+    $(...) is greedy, which means if there is something like
+    $()  ()$wow, it will match the ") (" part, which is not what we want. Choosing
+    `` means we must support $$grouping to support `` syntax.
+
+$$comment
+    Thus, the syntax for $$define is straightforward, well, we actually need to consider three
+    thing, there is three elements in the sub-language, single $ macro, double $$ macro, and literal
+    that means there needs to be a way to distinguish between these three types, maybe
+    $$define $func #literal #func ##macro
+    and for example, our standard macro library will have
+
+    $$define $rect #width #height
+        $$createNode
+            type: Rect,
+            width: #width
+            height: #height
+
+##comment
+
+$$comment
