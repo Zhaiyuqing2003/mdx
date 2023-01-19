@@ -90,22 +90,22 @@ const App: Component = () => {
 // $$test 1 $$test 2 $$test 3
 //   $$where`))
 
-  const ast = compiler(`
-$$define
-  $$log 1
- 1
-`)
+//   const ast = compiler(`
+// $$define
+//   $$log 1
+//  1
+// `)
 
-  console.log("ast is", ast)
+//   console.log("ast is", ast)
 
-  const macroEnv = MacroEnv.new();
+//   const macroEnv = MacroEnv.new();
 
-  macroEnv.register("$$log", Log.transformer, Log.macroFn);
-  macroEnv.register("$$lazy", Lazy.transformer, Lazy.macroFn);
-  macroEnv.register("$$repeat", Repeat.transformer, Repeat.macroFn);
+//   macroEnv.register("$$log", Log.transformer, Log.macroFn);
+//   macroEnv.register("$$lazy", Lazy.transformer, Lazy.macroFn);
+//   macroEnv.register("$$repeat", Repeat.transformer, Repeat.macroFn);
 
-  const result = executor(ast, macroEnv, {});
-  console.log(result)
+//   const result = executor(ast, macroEnv, {});
+//   console.log(result)
 
 
   onMount(() => {

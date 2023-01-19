@@ -139,7 +139,7 @@ export const computeFunctionMap : ComputeFunctionMap = {
   },
   [Rect] : (node, position) => {
     const padding = node.padding;
-  
+
     console.log(node.width, node.height)
 
     const computedNode : ComputedMathNode<Rect> = {
